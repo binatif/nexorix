@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Neon Club</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: black;
+  color: white;
+}
+
+header {
+  text-align: center;
+  padding: 20px;
+  background: linear-gradient(90deg, #00ffff, #ff00ff);
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  background: #111;
+  flex-wrap: wrap;
+}
+
+nav button {
+  margin: 5px;
+  padding: 10px;
+  background: black;
+  color: cyan;
+  border: 1px solid cyan;
+  cursor: pointer;
+}
+
+section {
+  display: none;
+  padding: 20px;
+}
+
+.active {
+  display: block;
+}
+
+.card {
+  padding: 15px;
+  border: 1px solid cyan;
+  margin: 10px 0;
+  background: #111;
+}
+
+button {
+  padding: 10px;
+  cursor: pointer;
+}
+
+#chatBox {
+  height: 200px;
+  overflow-y: auto;
+  border: 1px solid cyan;
+  padding: 10px;
+}
+
+.user { color: cyan; }
+.ai { color: magenta; }
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>⚡ NEON CLUB ⚡</h1>
+<p>All-in-One Gaming + AI Platform</p>
+</header>
+
+<nav>
+<button onclick="show('home')">Home</button>
+<button onclick="show('arcade')">Arcade</button>
+<button onclick="show('ai')">AI</button>
+<button onclick="show('python')">Python</button>
+<button onclick="show('premium')">Premium</button>
+</nav>
+
+<!-- HOME -->
+<section id="home" class="active">
+<h2>🏠 Home</h2>
+<div class="card">Welcome to Neon Club 🎮</div>
+</section>
+
+<!-- ARCADE (FIXED + MIXED) -->
+<section id="arcade">
+
+<h2>🎮 Arcade Hub</h2>
+
+<input id="search" onkeyup="searchGames()"
+placeholder="Search games..."
+style="padding:10px;width:80%;margin-bottom:10px;">
+
+<div class="card game">
+  <h3>🎯 Poki Games</h3>
+  <p>Play thousands of free games</p>
+  <a href="https://poki.com" target="_blank">
+    <button>Play Now</button>
+  </a>
+</div>
+
+<div class="card game">
+  <h3>🚀 CrazyGames</h3>
+  <p>Action, racing, shooting games</p>
+  <a href="https://crazygames.com" target="_blank">
+    <button>Play Now</button>
+  </a>
+</div>
+
+<div class="card game">
+  <h3>🏎 Racing Games</h3>
+  <p>Fast car racing collection</p>
+  <a href="https://poki.com/en/racing" target="_blank">
+    <button>Play Now</button>
+  </a>
+</div>
+
+<div class="card game">
+  <h3>🔫 Shooting Games</h3>
+  <p>FPS battle games</p>
+  <a href="https://poki.com/en/shooting" target="_blank">
+    <button>Play Now</button>
+  </a>
+</div>
+
+</section>
+
+<!-- AI -->
+<section id="ai">
+<h2>🤖 Neon AI</h2>
+
+<div id="chatBox"></div>
+
+<input id="msg" placeholder="Ask Neon AI..." />
+<button onclick="send()">Send</button>
+</section>
+
+<!-- PYTHON -->
+<section id="python">
+<h2>🐍 Python</h2>
+<div class="card">Learn Python on W3Schools</div>
+</section>
+
+<!-- 💎 PREMIUM -->
+<section id="premium">
+<h2>💎 Premium</h2>
+
+<div class="card">
+
+  <h3>🚀 Upgrade Plans</h3>
+
+  <h4>💳 Basic Plan</h4>
+  <p>1000 × 5 = <b>5000</b></p>
+  <button onclick="buy('basic')">Buy Basic</button>
+
+  <hr>
+
+  <h4>🔥 Pro Plan</h4>
+  <p>3000 × 3 = <b>9000</b></p>
+  <button onclick="buy('pro')">Buy Pro</button>
+
+  <hr>
+
+  <h4>👑 Ultra Plan</h4>
+  <p>5000 × 2 = <b>10000</b></p>
+  <button onclick="buy('ultra')">Buy Ultra</button>
+
+  <hr>
+
+  <h3>💳 SadaPay Payment</h3>
+  <p>Send payment to:</p>
+
+  <h2 onclick="alert('Payment info opened')"
+      style="color:cyan;cursor:pointer;">
+      📱 SadaPay Number
+  </h2>
+
+  <button onclick="paid()">I Have Paid</button>
+
+  <p id="status">Status: Locked ❌</p>
+
+</div>
+
+</section>
+
+<script>
+
+let premium = false;
+let balance = 0;
+
+/* PAGE SWITCH */
+function show(id){
+  document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+/* AI CHAT */
+function send(){
+  let msg = document.getElementById("msg");
+  let text = msg.value;
+  if(!text) return;
+
+  let box = document.getElementById("chatBox");
+
+  box.innerHTML += "<p class='user'>You: " + text + "</p>";
+  box.innerHTML += "<p class='ai'>Neon AI: I got → " + text + "</p>";
+
+  msg.value = "";
+}
+
+/* PREMIUM */
+function buy(plan){
+
+  if(plan === "basic") balance = 1000 * 5;
+  if(plan === "pro") balance = 3000 * 3;
+  if(plan === "ultra") balance = 5000 * 2;
+
+  premium = true;
+
+  document.getElementById("status").innerText =
+    "Premium Activated ✔ Balance: " + balance;
+
+  alert("Upgrade Successful 🚀");
+}
+
+/* PAYMENT */
+function paid(){
+  premium = true;
+
+  document.getElementById("status").innerText =
+    "Waiting for approval ⏳";
+
+  alert("Payment submitted 👍");
+}
+
+/* SEARCH SYSTEM */
+function searchGames(){
+  let input = document.getElementById("search").value.toLowerCase();
+  let games = document.querySelectorAll(".game");
+
+  games.forEach(game => {
+    let text = game.innerText.toLowerCase();
+    game.style.display = text.includes(input) ? "block" : "none";
+  });
+}
+
+</script>
+
+</body>
+</html>
